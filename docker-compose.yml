@@ -1,0 +1,19 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    container_name: go_rest_api_v1_db
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-qwe123}
+      POSTGRES_DB: rest_api
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8088:8080
+    container_name: go_rest_api_v1_adminer
