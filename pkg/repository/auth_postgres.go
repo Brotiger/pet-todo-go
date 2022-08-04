@@ -27,3 +27,8 @@ func (r *AuthPostgres) CreateUser(user todo.User) (int, error) {
 
 	return id, nil
 }
+
+type signInInput struct {
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
