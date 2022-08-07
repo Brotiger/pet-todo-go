@@ -61,6 +61,7 @@ func (h *Handler) getListById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+		return
 	}
 
 	list, err := h.services.TodoList.GetById(userId, id)
@@ -77,5 +78,24 @@ func (h *Handler) updateList(c *gin.Context) {
 }
 
 func (h *Handler) deleteList(c *gin.Context) {
-	
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+		return
+	}
+
+	err = h.services.TodoList.Delete(userId, id)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, statusResponse{
+		Status: "ok",
+	})
 }
