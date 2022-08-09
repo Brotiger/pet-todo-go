@@ -19,14 +19,14 @@ type TodoList interface {
 	Update(userId, listId int, input todo.UpdateListInput) error
 }
 
-type TodoIten interface {
-
+type TodoItem interface {
+	Create(userId int, listId int, item todo.TodoItem) (int, error)
 }
 
 type Service struct {
 	Authorization
 	TodoList
-	TodoIten
+	TodoItem
 }
 
 func NewService(repos *repository.Repository) *Service {
